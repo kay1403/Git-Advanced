@@ -158,7 +158,11 @@ git rebase --continue
 git push origin main --force
 
 
+<<<<<<< HEAD
 Output:
+=======
+# Output:
+>>>>>>> 74b8057 (chore: Create third and fourth file)
 
 [detached HEAD 75e80f8] docs: Add README to track Git exercises
  Date: Mon Sep 8 15:52:31 2025 +0200
@@ -177,7 +181,11 @@ To https://github.com/kay1403/Git-Advanced.git
  + 09db80c...75e80f8 main -> main (forced update)
 
 
+<<<<<<< HEAD
 Explanation:
+=======
+# Explanation:
+>>>>>>> 74b8057 (chore: Create third and fourth file)
 
 git rebase -i HEAD~2 lets you squash commits interactively.
 
@@ -234,6 +242,7 @@ git reset HEAD~1 unstages the previous combined commit.
 
 Each file is staged and committed separately to have clearer, atomic commits.
 
+<<<<<<< HEAD
 git push --force is required because splitting a commit rewrites the history of the main branch.
 
 ### Challenge 5: Advanced Squashing
@@ -332,3 +341,6 @@ git rebase --continue applies the remaining commits after dropping the unwanted 
 
 This ensures your Git history is clean and unwanted commits are fully removed.
 
+=======
+git push --force is required because splitting a commit rewrites the history of the main branch.
+>>>>>>> 74b8057 (chore: Create third and fourth file)
