@@ -557,3 +557,227 @@ HEAD@{0} represents the current state of the repository.
 Older entries show previous commits and operations, including checkouts, commits, and resets.
 
 git reflog is extremely useful to recover lost commits, undo mistakes, or return to a previous state even if those commits are no longer visible in git log.
+
+
+## Part 2: Branching Basics
+
+### Challenge 1: Feature Branch Creation
+
+**Goal:**  
+Create a new feature branch `ft/new-feature` and switch to it.
+
+**Commands and Explanation:**
+
+```
+# Create and switch to a new branch
+git checkout -b ft/new-feature
+# List all branches to verify
+git branch
+git checkout -b ft/new-feature creates a new branch and switches to it automatically.
+
+git branch lists all local branches and marks the current branch with *.
+
+# Output:
+macbookpro@AngeKoumba-MBP Git-Advanced % git checkout -b ft/new-feature
+Switched to a new branch 'ft/new-feature'
+macbookpro@AngeKoumba-MBP Git-Advanced % git branch
+  ft/branch
+* ft/new-feature
+  main
+
+### Challenge 2: Working on the Feature Branch
+
+Goal:
+Create a new file feature.txt in ft/new-feature and commit it.
+
+Commands:
+
+touch feature.txt
+git add feature.txt
+git commit -m "Implemented core functionality for new feature"
+Stage changes using git add.
+
+Commit with a descriptive message.
+
+Output:
+
+macbookpro@AngeKoumba-MBP Git-Advanced % touch feature.txt
+macbookpro@AngeKoumba-MBP Git-Advanced % git add feature.txt
+macbookpro@AngeKoumba-MBP Git-Advanced % git commit -m "Implemented core functionality for new feature"
+[ft/new-feature d5a7220] Implemented core functionality for new feature
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 feature.txt
+
+### Challenge 3: Switching Back and Making More Changes
+
+Goal:
+Switch back to main branch and create a new file readme.txt.
+
+Commands:
+git checkout main
+touch readme.txt
+git add readme.txt
+git commit -m "Updated project readme"
+
+Explanation:
+Switching branches allows working on multiple features in parallel.
+Changes in one branch do not affect others until merged.
+
+Output:
+macbookpro@AngeKoumba-MBP Git-Advanced % git checkout main
+Switched to branch 'main'
+Your branch is up to date with 'origin/main'.
+macbookpro@AngeKoumba-MBP Git-Advanced % touch readme.txt
+macbookpro@AngeKoumba-MBP Git-Advanced % git add readme.txt
+macbookpro@AngeKoumba-MBP Git-Advanced % git commit -m "Updated project readme"
+[main 803b3c8] Updated project readme
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 readme.txt
+Challenge 4: Local vs. Remote Branches
+Goal:
+Push local branches to the remote repository to sync changes.
+
+Commands:
+git push origin main
+git push origin ft/new-feature
+git branch -r
+
+Explanation:
+
+git push sends local commits to the remote.
+
+git branch -r lists remote branches.
+
+Output:
+
+macbookpro@AngeKoumba-MBP Git-Advanced % git push origin ft/new-feature
+Enumerating objects: 3, done.
+Counting objects: 100% (3/3), done.
+Delta compression using up to 4 threads
+Compressing objects: 100% (2/2), done.
+Writing objects: 100% (2/2), 272 bytes | 272.00 KiB/s, done.
+Total 2 (delta 1), reused 0 (delta 0), pack-reused 0 (from 0)
+remote: Resolving deltas: 100% (1/1), completed with 1 local object.
+remote: 
+remote: Create a pull request for 'ft/new-feature' on GitHub by visiting:
+remote:      https://github.com/kay1403/Git-Advanced/pull/new/ft/new-feature
+remote: 
+To https://github.com/kay1403/Git-Advanced.git
+ * [new branch]      ft/new-feature -> ft/new-feature
+macbookpro@AngeKoumba-MBP Git-Advanced % git branch -r
+  origin/HEAD -> origin/main
+  origin/ft/new-feature
+  origin/main
+Challenge 5: Branch Deletion
+Goal:
+Delete a local branch once work is completed.
+
+Commands:
+
+git branch -d ft/new-feature
+Explanation:
+
+Deletes a branch that has been merged.
+
+Use -D to force delete an unmerged branch.
+
+Output & Steps to Merge First:
+
+
+macbookpro@AngeKoumba-MBP Git-Advanced % git branch -d ft/new-feature
+error: the branch 'ft/new-feature' is not fully merged
+hint: If you are sure you want to delete it, run 'git branch -D ft/new-feature'
+...
+macbookpro@AngeKoumba-MBP Git-Advanced % git merge ft/new-feature
+Merge made by the 'ort' strategy.
+ feature.txt | 0
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 feature.txt
+macbookpro@AngeKoumba-MBP Git-Advanced % git branch -d ft/new-feature
+Deleted branch ft/new-feature (was d5a7220).
+Challenge 6: Creating a Branch from a Commit
+
+Goal:
+Create a new branch from a specific commit two positions back in history.
+
+Commands:
+
+git log --oneline
+git checkout -b ft/new-branch-from-commit <commit-hash>
+git branch
+
+# Output:
+
+macbookpro@AngeKoumba-MBP Git-Advanced % git checkout -b ft/new-branch-from-commit d5a7220
+Switched to a new branch 'ft/new-branch-from-commit'
+macbookpro@AngeKoumba-MBP Git-Advanced % git branch
+  ft/branch
+* ft/new-branch-from-commit
+  main
+
+### Challenge 7: Branch Merging
+Goal:
+Merge a feature branch into main.
+
+Commands:
+git checkout main
+git merge ft/new-branch-from-commit
+
+Output:
+
+macbookpro@AngeKoumba-MBP Git-Advanced % git merge ft/new-branch-from-commit
+Already up to date.
+Challenge 8: Branch Rebasing
+
+Goal:
+Rebase a feature branch onto main.
+
+Commands:
+
+git checkout ft/new-branch-from-commit
+git rebase main
+Output:
+
+
+macbookpro@AngeKoumba-MBP Git-Advanced % git rebase main
+Successfully rebased and updated refs/heads/ft/new-branch-from-commit.
+Challenge 9: Renaming Branches
+Goal:
+Rename a branch to a more descriptive name.
+
+Commands:
+
+git branch -m ft/new-branch-from-commit ft/improved-branch-name
+git branch
+
+# Output:
+
+macbookpro@AngeKoumba-MBP Git-Advanced % git branch -m ft/new-branch-from-commit ange
+macbookpro@AngeKoumba-MBP Git-Advanced % git branch
+* ange
+  ft/branch
+  main
+Challenge 10: Checking Out Detached HEAD
+Goal:
+Explore detached HEAD state by checking out a specific commit.
+
+Commands:
+git log --oneline
+git checkout <commit-hash>
+git status
+
+# Explanation:
+
+Detached HEAD means you are not on any branch.
+
+Changes made here are not tied to a branch unless you create one.
+
+# Output:
+
+macbookpro@AngeKoumba-MBP Git-Advanced % git checkout 4ee916c
+Note: switching to '4ee916c'.
+You are in 'detached HEAD' state...
+HEAD is now at 4ee916c chore: Create third and fourth files
+macbookpro@AngeKoumba-MBP Git-Advanced % git status
+HEAD detached at 4ee916c
+nothing to commit, working tree clean
