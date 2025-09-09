@@ -244,7 +244,7 @@ Combine the last two commits (`Create third file` and `Create fourth file`) into
 
 **Terminal Commands and Output:**
 
-```
+
 # Start interactive rebase including the last two commits
 git rebase -i HEAD~2
 
@@ -268,10 +268,10 @@ git log --oneline -n 5
 
 Output:
 
-<new-hash> chore: Create third and fourth files
-<hash> docs: Add README to track Git exercises
-<hash> chore: Create another file
-<hash> chore: Create initial file
+<new> chore: Create third and fourth files
+ docs: Add README to track Git exercises
+ chore: Create another file
+ chore: Create initial file
 
 # Explanation:
 
@@ -293,7 +293,7 @@ Completely remove an unwanted commit from the Git history.
 
 **Terminal Commands and Output:**
 
-```
+
 # Create a new file and commit it
 touch unwanted.txt
 git add unwanted.txt
@@ -317,10 +317,10 @@ git log --oneline
 # Output:
 
 # The "Unwanted commit" no longer appears in the history
-<hash> docs: Add README to track Git exercises
-<hash> chore: Create third and fourth files
-<hash> chore: Create another file
-<hash> chore: Create initial file
+ docs: Add README to track Git exercises
+ chore: Create third and fourth files
+ chore: Create another file
+ chore: Create initial file
 
 # Note:
 
@@ -345,7 +345,7 @@ Delve deeper into `git rebase -i`. Rearrange commits within your history using i
 
 **Terminal Commands and Output:**
 
-```
+
 # Check the commit history to identify commits to reorder
 git log --oneline -n 5
 
@@ -398,7 +398,7 @@ Selectively apply commits from one branch to another using `git cherry-pick`.
 
 **Terminal Commands and Output:**
 
-```
+
 # Create a new branch and switch to it
 git checkout -b ft/branch
 
@@ -439,11 +439,10 @@ Cherry-picking is useful to apply specific commits from another branch without m
 
 This challenge demonstrates how to visualize Git commit history using terminal commands.
 
----
 
 ## 1. Simple log
 
-```
+
 git log --oneline
 Shows recent commits in a single line.
 
@@ -461,7 +460,7 @@ ecd1d04 chore: Create another file
 git log --oneline --graph
 Adds a tree structure to show branch and merge history.
 
-output:
+# output:
 
 * 4ee916c (HEAD -> main) chore: Create third and fourth files
 * 70f32ee temp: save pending changes
@@ -475,7 +474,7 @@ output:
 git log --oneline --graph --all --decorate
 Shows all branches (--all) and branch/tags labels (--decorate).
 
-output:
+# output:
 
 * 84337a2 (ft/branch) Temp: save README changes before switching branch
 * 636886d Implemented test 5
@@ -516,7 +515,7 @@ Learn how to use `git reflog` to track HEAD history and revert to previous state
 
 **Terminal Commands and Output:**
 
-```
+
 # Display the reflog
 git reflog
 
@@ -559,7 +558,7 @@ Older entries show previous commits and operations, including checkouts, commits
 git reflog is extremely useful to recover lost commits, undo mistakes, or return to a previous state even if those commits are no longer visible in git log.
 
 
-## Part 2: Branching Basics
+### Part 2: Branching Basics
 
 ### Challenge 1: Feature Branch Creation
 
@@ -568,7 +567,7 @@ Create a new feature branch `ft/new-feature` and switch to it.
 
 **Commands and Explanation:**
 
-```
+
 # Create and switch to a new branch
 git checkout -b ft/new-feature
 # List all branches to verify
@@ -587,11 +586,10 @@ macbookpro@AngeKoumba-MBP Git-Advanced % git branch
 
 ### Challenge 2: Working on the Feature Branch
 
-Goal:
+# Goal:
 Create a new file feature.txt in ft/new-feature and commit it.
 
 Commands:
-
 touch feature.txt
 git add feature.txt
 git commit -m "Implemented core functionality for new feature"
@@ -599,7 +597,7 @@ Stage changes using git add.
 
 Commit with a descriptive message.
 
-Output:
+# Output:
 
 macbookpro@AngeKoumba-MBP Git-Advanced % touch feature.txt
 macbookpro@AngeKoumba-MBP Git-Advanced % git add feature.txt
@@ -610,7 +608,7 @@ macbookpro@AngeKoumba-MBP Git-Advanced % git commit -m "Implemented core functio
 
 ### Challenge 3: Switching Back and Making More Changes
 
-Goal:
+# Goal:
 Switch back to main branch and create a new file readme.txt.
 
 Commands:
@@ -619,11 +617,11 @@ touch readme.txt
 git add readme.txt
 git commit -m "Updated project readme"
 
-Explanation:
+# Notes:
 Switching branches allows working on multiple features in parallel.
 Changes in one branch do not affect others until merged.
 
-Output:
+# Output:
 macbookpro@AngeKoumba-MBP Git-Advanced % git checkout main
 Switched to branch 'main'
 Your branch is up to date with 'origin/main'.
@@ -642,13 +640,13 @@ git push origin main
 git push origin ft/new-feature
 git branch -r
 
-Explanation:
+# Note:
 
 git push sends local commits to the remote.
 
 git branch -r lists remote branches.
 
-Output:
+# Output:
 
 macbookpro@AngeKoumba-MBP Git-Advanced % git push origin ft/new-feature
 Enumerating objects: 3, done.
@@ -675,19 +673,19 @@ Delete a local branch once work is completed.
 Commands:
 
 git branch -d ft/new-feature
-Explanation:
+
+# Notes:
 
 Deletes a branch that has been merged.
 
 Use -D to force delete an unmerged branch.
 
-Output & Steps to Merge First:
-
+# Output & Steps to Merge First:
 
 macbookpro@AngeKoumba-MBP Git-Advanced % git branch -d ft/new-feature
 error: the branch 'ft/new-feature' is not fully merged
 hint: If you are sure you want to delete it, run 'git branch -D ft/new-feature'
-...
+
 macbookpro@AngeKoumba-MBP Git-Advanced % git merge ft/new-feature
 Merge made by the 'ort' strategy.
  feature.txt | 0
@@ -697,7 +695,7 @@ macbookpro@AngeKoumba-MBP Git-Advanced % git branch -d ft/new-feature
 Deleted branch ft/new-feature (was d5a7220).
 Challenge 6: Creating a Branch from a Commit
 
-Goal:
+# Goal:
 Create a new branch from a specific commit two positions back in history.
 
 Commands:
@@ -716,33 +714,35 @@ macbookpro@AngeKoumba-MBP Git-Advanced % git branch
   main
 
 ### Challenge 7: Branch Merging
-Goal:
+
+# Goal:
 Merge a feature branch into main.
 
 Commands:
 git checkout main
 git merge ft/new-branch-from-commit
 
-Output:
+# Output:
 
 macbookpro@AngeKoumba-MBP Git-Advanced % git merge ft/new-branch-from-commit
 Already up to date.
 Challenge 8: Branch Rebasing
 
-Goal:
+# Goal:
 Rebase a feature branch onto main.
 
 Commands:
 
 git checkout ft/new-branch-from-commit
 git rebase main
-Output:
 
+# Output:
 
 macbookpro@AngeKoumba-MBP Git-Advanced % git rebase main
 Successfully rebased and updated refs/heads/ft/new-branch-from-commit.
 Challenge 9: Renaming Branches
-Goal:
+
+# Goal:
 Rename a branch to a more descriptive name.
 
 Commands:
@@ -757,16 +757,18 @@ macbookpro@AngeKoumba-MBP Git-Advanced % git branch
 * ange
   ft/branch
   main
-Challenge 10: Checking Out Detached HEAD
-Goal:
+
+## Challenge 10: Checking Out Detached HEAD
+
+# Goal:
 Explore detached HEAD state by checking out a specific commit.
 
 Commands:
 git log --oneline
-git checkout <commit-hash>
+git checkout 4ee916c
 git status
 
-# Explanation:
+# Notes:
 
 Detached HEAD means you are not on any branch.
 
