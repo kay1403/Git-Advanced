@@ -64,7 +64,7 @@ git push origin main
  create mode 100644 README.md
 
 
-# Explanation:
+# Note:
 
 git add test4.md stages the missing file.
 
@@ -116,7 +116,7 @@ remote: Resolving deltas: 100% (2/2), done.
  + 75e80f8...f0528bf main -> main (forced update)
 
 
-# Explanation:
+# Note:
 
 git rebase -i HEAD~2 allows editing the last 2 commits.
 
@@ -158,7 +158,7 @@ git rebase --continue
 git push origin main --force
 
 
-Output:
+
 # Output:
 
 [detached HEAD 75e80f8] docs: Add README to track Git exercises
@@ -178,8 +178,7 @@ To https://github.com/kay1403/Git-Advanced.git
  + 09db80c...75e80f8 main -> main (forced update)
 
 
-Explanation:
-# Explanation:
+# Note:
 
 git rebase -i HEAD~2 lets you squash commits interactively.
 
@@ -230,7 +229,7 @@ git push origin main --force
 * ecd1d04 chore: Create another file
 * 27e720b chore: Create initial file
 
-# Explanation:
+# Note:
 
 git reset HEAD~1 unstages the previous combined commit.
 
@@ -323,7 +322,8 @@ git log --oneline
 <hash> chore: Create another file
 <hash> chore: Create initial file
 
-# Explanation:
+# Note:
+
 
 Always commit or stash changes before performing an interactive rebase to prevent conflicts or errors.
 
@@ -368,7 +368,7 @@ pick 74b8057 chore: Create third and fourth file
 
 # Resolve conflicts if any
 git status
-git add <conflicted_file>
+git add README.md
 git rebase --continue
 
 # Finalize the rebase and confirm the new commit order
@@ -381,7 +381,7 @@ git log --oneline --graph --decorate
 ecd1d04 chore: Create another file
 27e720b chore: Create initial file
 
-# Explanation:
+# Note:
 
 Commits have been successfully reordered without losing any changes.
 
@@ -426,7 +426,6 @@ git log --oneline -n 5
 
 # Output:
 a1b2c3d Implemented test 5
-<previous commits>
 
 Notes:
 If conflicts occur during cherry-pick like in my case:
@@ -551,7 +550,7 @@ a33a524 HEAD@{24}: rebase (start): checkout a33a524^
 c30078e HEAD@{25}: rebase (finish): returning to refs/heads/main
 c30078e HEAD@{26}: rebase (squash): chore: Create fourth file
 
-# Explanation:
+# Note:
 
 HEAD@{0} represents the current state of the repository.
 
