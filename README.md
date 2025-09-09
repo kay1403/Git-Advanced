@@ -1,0 +1,285 @@
+ 
+````markdown
+# Git-Advanced Exercises
+
+This repository contains solutions for the Git Advanced exercises.  
+All commands and explanations are documented here for each challenge.
+## Part 1: Refining Git History
+
+
+### Challenge 1: Missing File Fix
+
+**Problem:**  
+We forgot to add `test4.md` in the last commit.
+
+**Terminal Commands and Output:**
+
+
+# Clone the repository and navigate into it
+git clone https://github.com/kay1403/Git-Advanced.git
+cd Git-Advanced
+
+# Create dummy files
+touch test{1..4}.md
+
+# Stage and commit the first file
+git add test1.md
+git commit -m "chore: Create initial file"
+
+# Stage and commit the second file
+git add test2.md
+git commit -m "chore: Create another file"
+
+# Stage and commit third and fourth files (forgot test4.md initially)
+git add test3.md
+git add test4.md
+git commit -m "chore: Create third and fourth files"
+
+# Push changes to remote
+git push origin main
+
+# Stage missing file and amend the last commit
+git add test4.md
+git commit --amend -m "chore: Create third and fourth files"
+
+# Create README.md to track Git exercises
+touch README.md
+git add README.md
+git commit -m "docs: Add README to track Git exercises"
+
+# andle rejected push due to remote updates
+git pull origin main --rebase
+git push origin main
+
+# output
+
+[main b55912c] chore: Create third and fourth files
+ Date: Mon Sep 8 15:32:30 2025 +0200
+ 2 files changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 test3.md
+ create mode 100644 test4.md
+
+[main 3d8c468] docs: Add README to track Git exercises
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 README.md
+
+
+# Explanation:
+
+git add test4.md stages the missing file.
+
+git commit --amend modifies the previous commit to include the missing file.
+
+git push might be rejected if the remote has updates; in that case, use git pull --rebase before pushing again.
+
+README.md was added to track all exercises moving forward.
+
+
+### Challenge 2: Editing Commit Message
+
+Problem:
+The commit message "chore: Create another file" should be "chore: Create second file" for clarity.
+
+Terminal Commands and Output:
+
+# Start interactive rebase to edit the last 2 commits
+git rebase -i HEAD~2
+
+# If there is an editor error, set a new editor
+git config --global core.editor "nano"
+
+# Re-run interactive rebase
+git rebase -i HEAD~2
+
+# Continue rebase after resolving empty commits or conflicts
+git rebase --continue
+
+# Force push to update remote after changing history
+git push origin main --force
+
+
+# Output:
+
+[detached HEAD 6999360] docs: Add README to track Git exercises
+ Date: Mon Sep 8 15:52:31 2025 +0200
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 README.md
+Successfully rebased and updated refs/heads/main.
+
+Enumerating objects: 8, done.
+Counting objects: 100% (8/8), done.
+Delta compression using up to 4 threads
+Compressing objects: 100% (7/7), done.
+Writing objects: 100% (2/2), 276 bytes | 276.00 KiB/s, done.
+Total 7 (delta 2), reused 0 (delta 0), pack-reused 0 (from 0)
+remote: Resolving deltas: 100% (2/2), done.
+ + 75e80f8...f0528bf main -> main (forced update)
+
+
+# Explanation:
+
+git rebase -i HEAD~2 allows editing the last 2 commits.
+
+If the default editor fails (vi), switch to nano using git config --global core.editor "nano".
+
+git rebase --continue applies remaining commits after conflicts or skipped cherry-picks.
+
+git push --force updates the remote branch after rewriting history.
+
+
+### Challenge 3: Squashing Commits
+
+**Problem:**  
+We have multiple commits for small changes:
+- `chore: Create initial file`
+- `chore: Create second file`
+- `chore: Create third file`
+- `chore: Create fourth file`
+- `docs: Add README to track Git exercises`
+
+We want to **squash some commits** to make the Git history cleaner.
+
+**Terminal Commands and Output:**
+
+
+# Start interactive rebase for the last 2 commits (or more if needed)
+git rebase -i HEAD~2
+
+# If editor error occurs, set nano as default editor
+git config --global core.editor "nano"
+
+# Re-run interactive rebase
+git rebase -i HEAD~2
+
+# Continue rebase after resolving skipped commits
+git rebase --continue
+
+# Force push to update remote after rewriting history
+git push origin main --force
+
+
+Output:
+
+[detached HEAD 75e80f8] docs: Add README to track Git exercises
+ Date: Mon Sep 8 15:52:31 2025 +0200
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 README.md
+Successfully rebased and updated refs/heads/main.
+
+Enumerating objects: 3, done.
+Counting objects: 100% (3/3), done.
+Delta compression using up to 4 threads
+Compressing objects: 100% (2/2), done.
+Writing objects: 100% (2/2), 272 bytes | 272.00 KiB/s, done.
+Total 2 (delta 1), reused 0 (delta 0), pack-reused 0 (from 0)
+remote: Resolving deltas: 100% (1/1), completed with 1 local object.
+To https://github.com/kay1403/Git-Advanced.git
+ + 09db80c...75e80f8 main -> main (forced update)
+
+
+Explanation:
+
+git rebase -i HEAD~2 lets you squash commits interactively.
+
+If your default editor fails, use nano with git config --global core.editor "nano".
+
+git rebase --continue applies the remaining commits after resolving skipped commits or conflicts.
+
+git push --force is necessary because squashing rewrites history on the main branch.
+
+
+### Challenge 4: Splitting a Commit
+
+**Problem:**  
+The commit `"chore: Create third and fourth files"` contains two files (`test3.md` and `test4.md`).  
+We want to **split it into two separate commits** for better tracking:  
+- `"chore: Create third file"`  
+- `"chore: Create fourth file"`
+
+**Terminal Commands and Output:**
+
+
+# Reset the last commit to unstage files
+git reset HEAD~1
+
+# Stage and commit the third file separately
+git add test3.md
+git commit -m "chore: Create third file"
+
+# Stage and commit the fourth file separately
+git add test4.md
+git commit -m "chore: Create fourth file"
+
+# Stage README.md and commit changes
+git add README.md
+git commit -m "docs: Add README to track Git exercises"
+
+# View commit history graphically
+git log --oneline --graph --decorate
+
+# Push changes to remote repository (force needed due to history rewrite)
+git push origin main --force
+
+# Output:
+
+* f0528bf (HEAD -> main) docs: Add README to track Git exercises
+* 5774843 chore: Create fourth file
+* a33a524 chore: Create third file
+* ecd1d04 chore: Create another file
+* 27e720b chore: Create initial file
+
+# Explanation:
+
+git reset HEAD~1 unstages the previous combined commit.
+
+Each file is staged and committed separately to have clearer, atomic commits.
+
+git push --force is required because splitting a commit rewrites the history of the main branch.
+
+### Challenge 5: Advanced Squashing
+
+**Goal:**  
+Combine the last two commits (`Create third file` and `Create fourth file`) into a single commit named `Create third and fourth files`.
+
+**Terminal Commands and Output:**
+
+```bash
+# Start interactive rebase including the last two commits
+git rebase -i HEAD~2
+
+# In the interactive editor, mark the second commit for squashing:
+# pick <hash> chore: Create third file
+# squash <hash> chore: Create fourth file
+
+# Edit the commit message to:
+# chore: Create third and fourth files
+
+# Save and exit the editor. The two commits are now combined.
+
+# Push the changes to remote (force push is required since history was rewritten)
+git push origin main --force
+
+Result:
+
+# View the last 5 commits
+git log --oneline -n 5
+
+
+Output:
+
+
+<new-hash> chore: Create third and fourth files
+<hash> docs: Add README to track Git exercises
+<hash> chore: Create another file
+<hash> chore: Create initial file
+Explanation:
+
+Use git rebase -i HEAD~2 to start an interactive rebase for the last two commits.
+
+Mark the second commit as squash to combine it with the first.
+
+Edit the commit message to reflect the combined change.
+
+git push --force is necessary because rewriting history changes commit hashes on the remote.
+
+Squashing is useful to clean up commit history and combine related changes into a single commit.
