@@ -249,8 +249,8 @@ Combine the last two commits (`Create third file` and `Create fourth file`) into
 git rebase -i HEAD~2
 
 # In the interactive editor, mark the second commit for squashing:
-# pick <hash> chore: Create third file
-# squash <hash> chore: Create fourth file
+# pick  chore: Create third file
+# squash  chore: Create fourth file
 
 # Edit the commit message to:
 # chore: Create third and fourth files
