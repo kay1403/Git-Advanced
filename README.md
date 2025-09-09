@@ -741,7 +741,8 @@ git rebase main
 
 macbookpro@AngeKoumba-MBP Git-Advanced % git rebase main
 Successfully rebased and updated refs/heads/ft/new-branch-from-commit.
-Challenge 9: Renaming Branches
+
+## Challenge 9: Renaming Branches
 
 # Goal:
 Rename a branch to a more descriptive name.
