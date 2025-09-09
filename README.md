@@ -245,7 +245,7 @@ Combine the last two commits (`Create third file` and `Create fourth file`) into
 
 **Terminal Commands and Output:**
 
-```bash
+```
 # Start interactive rebase including the last two commits
 git rebase -i HEAD~2
 
@@ -273,7 +273,8 @@ Output:
 <hash> docs: Add README to track Git exercises
 <hash> chore: Create another file
 <hash> chore: Create initial file
-Explanation:
+
+# Explanation:
 
 Use git rebase -i HEAD~2 to start an interactive rebase for the last two commits.
 
@@ -293,7 +294,7 @@ Completely remove an unwanted commit from the Git history.
 
 **Terminal Commands and Output:**
 
-```bash
+```
 # Create a new file and commit it
 touch unwanted.txt
 git add unwanted.txt
@@ -314,7 +315,7 @@ git rebase --continue
 # Verify the commit has been removed
 git log --oneline
 
-Output:
+# Output:
 
 # The "Unwanted commit" no longer appears in the history
 <hash> docs: Add README to track Git exercises
@@ -322,7 +323,7 @@ Output:
 <hash> chore: Create another file
 <hash> chore: Create initial file
 
-Explanation:
+# Explanation:
 
 Always commit or stash changes before performing an interactive rebase to prevent conflicts or errors.
 
@@ -344,18 +345,17 @@ Delve deeper into `git rebase -i`. Rearrange commits within your history using i
 
 **Terminal Commands and Output:**
 
-```bash
+```
 # Check the commit history to identify commits to reorder
 git log --oneline -n 5
-Example Output:
 
+# Output:
 
 0dbe910 temp: save README changes before rebase
 74b8057 chore: Create third and fourth file
 ecd1d04 chore: Create another file
 27e720b chore: Create initial file
-bash
-Copy code
+
 # Start an interactive rebase on the last 3 commits
 git rebase -i HEAD~3
 In the interactive editor, reorder commits by moving the lines corresponding to the commits.
@@ -374,15 +374,14 @@ git rebase --continue
 # Finalize the rebase and confirm the new commit order
 git log --oneline --graph --decorate
 
- Final Output:
-
+# Final Output:
 
 4ee916c chore: Create third and fourth files
 0dbe910 temp: save README changes before rebase
 ecd1d04 chore: Create another file
 27e720b chore: Create initial file
 
-Explanation:
+# Explanation:
 
 Commits have been successfully reordered without losing any changes.
 
@@ -399,7 +398,7 @@ Selectively apply commits from one branch to another using `git cherry-pick`.
 
 **Terminal Commands and Output:**
 
-```bash
+```
 # Create a new branch and switch to it
 git checkout -b ft/branch
 
@@ -415,7 +414,7 @@ git checkout main
 # Identify the commit hash from ft/branch
 git log ft/branch --oneline -n 1
 
-Output:
+# Output:
 
 a1b2c3d Implemented test 5
 
@@ -425,7 +424,7 @@ git cherry-pick a1b2c3d
 # Verify the cherry-picked commit
 git log --oneline -n 5
 
-Output:
+# Output:
 a1b2c3d Implemented test 5
 <previous commits>
 
@@ -445,11 +444,11 @@ This challenge demonstrates how to visualize Git commit history using terminal c
 
 ## 1. Simple log
 
-```bash
+```
 git log --oneline
 Shows recent commits in a single line.
 
-output:
+# output:
 
 4ee916c chore: Create third and fourth files
 70f32ee temp: save pending changes
@@ -501,7 +500,7 @@ git log --graph --pretty=format:'%h - %an: %s' --abbrev-commit
 
 %s : commit message
 
-output:
+# output:
 
 * 4ee916c - Ange Koumba: chore: Create third and fourth files
 * 70f32ee - Ange Koumba: temp: save pending changes
@@ -518,19 +517,41 @@ Learn how to use `git reflog` to track HEAD history and revert to previous state
 
 **Terminal Commands and Output:**
 
-```bash
+```
 # Display the reflog
 git reflog
- Output:
+
+# Output:
 
 4ee916c (HEAD -> main) HEAD@{0}: checkout: moving from ft/branch to main
-84337a2 (ft/branch) HEAD@{1}: commit: temp: save README changes before switching branch
+84337a2 (ft/branch) HEAD@{1}: commit: Temp: save README changes before switching branch
 636886d HEAD@{2}: commit: Implemented test 5
 1d4649a HEAD@{3}: checkout: moving from 1d4649a9c2fadf3252067e67810835e0eaf2c1a9 to ft/branch
-...
+1d4649a HEAD@{4}: rebase (continue): chore: Create third and fourth files
+ecd1d04 HEAD@{5}: rebase (start): checkout HEAD~3
+4ee916c (HEAD -> main) HEAD@{6}: reset: moving to HEAD
+4ee916c (HEAD -> main) HEAD@{7}: rebase (finish): returning to refs/heads/main
+4ee916c (HEAD -> main) HEAD@{8}: rebase (continue): chore: Create third and fourth files
+70f32ee HEAD@{9}: rebase (pick): temp: save pending changes
+c69f446 HEAD@{10}: rebase (continue): temp: save README changes before rebase
+ecd1d04 HEAD@{11}: rebase (start): checkout HEAD~3
+898c88f HEAD@{12}: rebase (finish): returning to refs/heads/main
+898c88f HEAD@{13}: rebase (start): checkout HEAD~2
+898c88f HEAD@{14}: rebase (finish): returning to refs/heads/main
+898c88f HEAD@{15}: rebase (start): checkout HEAD~2
+898c88f HEAD@{16}: commit: temp: save pending changes
+0dbe910 HEAD@{17}: rebase (finish): returning to refs/heads/main
+0dbe910 HEAD@{18}: rebase (pick): temp: save README changes before rebase
+74b8057 (origin/main, origin/HEAD) HEAD@{19}: rebase (start): checkout HEAD~3
+e6eedf3 HEAD@{20}: commit: temp: save README changes before rebase
 da60e7a HEAD@{21}: commit: Unwanted commit
+74b8057 (origin/main, origin/HEAD) HEAD@{22}: rebase (finish): returning to refs/heads/main
+74b8057 (origin/main, origin/HEAD) HEAD@{23}: rebase (squash): chore: Create third and fourth file
+a33a524 HEAD@{24}: rebase (start): checkout a33a524^
+c30078e HEAD@{25}: rebase (finish): returning to refs/heads/main
+c30078e HEAD@{26}: rebase (squash): chore: Create fourth file
 
-Explanation:
+# Explanation:
 
 HEAD@{0} represents the current state of the repository.
 
