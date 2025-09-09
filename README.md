@@ -267,7 +267,6 @@ git log --oneline -n 5
 
 Output:
 
-
 <new-hash> chore: Create third and fourth files
 <hash> docs: Add README to track Git exercises
 <hash> chore: Create another file
@@ -283,3 +282,53 @@ Edit the commit message to reflect the combined change.
 git push --force is necessary because rewriting history changes commit hashes on the remote.
 
 Squashing is useful to clean up commit history and combine related changes into a single commit.
+
+
+### Challenge 6: Dropping a Commit
+
+**Goal:**  
+Completely remove an unwanted commit from the Git history.
+
+**Terminal Commands and Output:**
+
+```bash
+# Create a new file and commit it
+touch unwanted.txt
+git add unwanted.txt
+git commit -m "Unwanted commit"
+
+# Save any pending changes before interactive rebase
+git add .
+git commit -m "temp: save README changes before rebase"
+
+# Start an interactive rebase including the last 3 commits
+git rebase -i HEAD~3
+
+# In the interactive editor, locate the unwanted commit and replace 'pick' with 'drop'
+
+# Continue the rebase
+git rebase --continue
+
+# Verify the commit has been removed
+git log --oneline
+
+Output:
+
+# The "Unwanted commit" no longer appears in the history
+<hash> docs: Add README to track Git exercises
+<hash> chore: Create third and fourth files
+<hash> chore: Create another file
+<hash> chore: Create initial file
+
+Explanation:
+
+Always commit or stash changes before performing an interactive rebase to prevent conflicts or errors.
+
+git rebase -i HEAD~3 allows editing the last three commits, including the unwanted one.
+
+Replace pick with drop to remove the unwanted commit.
+
+git rebase --continue applies the remaining commits after dropping the unwanted one.
+
+This ensures your Git history is clean and unwanted commits are fully removed.
+
