@@ -726,7 +726,8 @@ git merge ft/new-branch-from-commit
 
 macbookpro@AngeKoumba-MBP Git-Advanced % git merge ft/new-branch-from-commit
 Already up to date.
-Challenge 8: Branch Rebasing
+
+## Challenge 8: Branch Rebasing
 
 # Goal:
 Rebase a feature branch onto main.
