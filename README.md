@@ -791,10 +791,350 @@ nothing to commit, working tree clean
 
 ### Challenge 1: Stashing Changes
 
-**Goal:**  
+**Goal:** 
 Temporarily save uncommitted changes without committing them.
 
 **Commands:**
-```bash
+
 git stash
 git stash list
+
+# Notes:
+
+git stash allows you to temporarily save uncommitted changes.
+
+git stash list shows all the existing stashes.
+
+# Output:
+
+
+mba-koumba@MacBook-Pro-2 Git-Advanced % git stash             
+
+Saved working directory and index state WIP on main: d3128f0 Part 3
+mba-koumba@MacBook-Pro-2 Git-Advanced % git stash list        
+stash@{0}: WIP on main: d3128f0 Part 3
+mba-koumba@MacBook-Pro-2 Git-Advanced %
+
+### Challenge 2: Retrieving Stashed Changes
+
+# Goal:
+Reapply previously stashed changes.
+
+Commands:
+
+git stash pop
+
+# Notes:
+
+git stash pop applies the most recent stash and removes it from the list.
+
+# Output:
+
+
+mba-koumba@MacBook-Pro-2 Git-Advanced % git stash pop
+
+On branch main
+Your branch is up to date with 'origin/main'.
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+        modified:   .DS_Store
+
+no changes added to commit (use "git add" and/or "git commit -a")
+Dropped refs/stash@{0} (9e8e9e16fc08b20eabb384ed906eb97572f45bec)
+mba-koumba@MacBook-Pro-2 Git-Advanced %
+
+### Challenge 3: Branch Merging Conflicts
+
+# Goal:
+Simulate a merge conflict and resolve it manually.
+
+Commands:
+
+git checkout -b ft/conflict-branch
+echo "Line from conflict branch" > conflict.txt
+git add conflict.txt
+git commit -m "feat: Add conflict line in branch"
+
+git checkout main
+echo "Line from main branch" > conflict.txt
+git add conflict.txt
+git commit -m "feat: Add conflict line in main"
+
+git merge ft/conflict-branch
+git add conflict.txt
+git commit -m "Resolving"
+
+# Notes:
+
+Merge conflicts happen when two branches modify the same line in a file.
+
+You need to manually resolve the conflict, then git add and git commit.
+
+# Output:
+
+mba-koumba@MacBook-Pro-2 Git-Advanced % git checkout -b ft/conflict-branch
+Switched to a new branch 'ft/conflict-branch'
+mba-koumba@MacBook-Pro-2 Git-Advanced % echo "Line from conflict branch" > conflict.txt
+mba-koumba@MacBook-Pro-2 Git-Advanced % git add conflict.txt
+mba-koumba@MacBook-Pro-2 Git-Advanced % git commit -m "feat: Add conflict line in branch"
+[ft/conflict-branch 16394bd] feat: Add conflict line in branch
+ 1 file changed, 1 insertion(+)
+ create mode 100644 conflict.txt
+mba-koumba@MacBook-Pro-2 Git-Advanced % git checkout main
+M       .DS_Store
+Switched to branch 'main'
+Your branch is up to date with 'origin/main'.
+mba-koumba@MacBook-Pro-2 Git-Advanced % echo "Line from main branch" > conflict.txt
+mba-koumba@MacBook-Pro-2 Git-Advanced % git add conflict.txt
+mba-koumba@MacBook-Pro-2 Git-Advanced % git commit -m "feat: Add conflict line in main"
+[main 74176f5] feat: Add conflict line in main
+ 1 file changed, 1 insertion(+)
+ create mode 100644 conflict.txt
+mba-koumba@MacBook-Pro-2 Git-Advanced % git merge ft/conflict-branch
+Auto-merging conflict.txt
+CONFLICT (add/add): Merge conflict in conflict.txt
+Automatic merge failed; fix conflicts and then commit the result.
+mba-koumba@MacBook-Pro-2 Git-Advanced % git add conflict.txt
+mba-koumba@MacBook-Pro-2 Git-Advanced % git commit -m "Resolving"
+[main 090785a] Resolving
+
+### Challenge 4: Resolving Conflicts with a Merge Tool
+
+# Goal:
+Use a merge tool to resolve conflicts visually.
+
+Commands:
+
+git mergetool
+
+# Notes:
+
+git mergetool opens a visual tool to compare and resolve conflicts.
+
+If no tool is configured, Git tries vimdiff, tortoisemerge, etc.
+
+# Output:
+
+mba-koumba@MacBook-Pro-2 Git-Advanced % git checkout -b ft/merge-tool
+echo "Change in merge-tool branch" > tool.txt
+git add tool.txt
+git commit -m "feat: add change for merge tool"
+Switched to a new branch 'ft/merge-tool'
+[ft/merge-tool b8ffb7e] feat: add change for merge tool
+ 1 file changed, 1 insertion(+)
+ create mode 100644 tool.txt
+mba-koumba@MacBook-Pro-2 Git-Advanced % git checkout main
+echo "Change in main branch" > tool.txt
+git add tool.txt
+git commit -m "feat: add conflicting change in main"
+M       .DS_Store
+Switched to branch 'main'
+Your branch is ahead of 'origin/main' by 3 commits.
+  (use "git push" to publish your local commits)
+[main 46b12d1] feat: add conflicting change in main
+ 1 file changed, 1 insertion(+)
+ create mode 100644 tool.txt
+mba-koumba@MacBook-Pro-2 Git-Advanced % git merge ft/merge-tool
+Auto-merging tool.txt
+CONFLICT (add/add): Merge conflict in tool.txt
+Automatic merge failed; fix conflicts and then commit the result.
+mba-koumba@MacBook-Pro-2 Git-Advanced % git mergetool
+
+This message is displayed because 'merge.tool' is not configured.
+See 'git mergetool --tool-help' or 'git help config' for more details.
+'git mergetool' will now attempt to use one of the following tools:
+tortoisemerge emerge vimdiff nvimdiff
+Merging:
+tool.txt
+Normal merge conflict for 'tool.txt':
+  {local}: created file
+  {remote}: created file
+Hit return to start merge resolution tool (vimdiff): git add tool.txt
+git commit -m "Resolved using merge tool"
+3 files to edit
+mba-koumba@MacBook-Pro-2 Git-Advanced % git add tool.txt
+mba-koumba@MacBook-Pro-2 Git-Advanced % git commit -m "Resolved using merge tool"
+[main 79c6c96] Resolved using merge tool
+
+### Challenge 5: Understanding Detached HEAD State
+
+# Goal:
+Check out a commit without being on a branch.
+
+Commands:
+
+git log --oneline
+git checkout <commit-hash>
+git status
+git checkout main
+Notes:
+
+Detached HEAD means you are on a specific commit, not on a branch.
+
+To return to a branch: git checkout <branch>.
+
+# Output:
+
+mba-koumba@MacBook-Pro-2 Git-Advanced % git log --oneline
+79c6c96 (HEAD -> main) Resolved using merge tool
+46b12d1 feat: add conflicting change in main
+b8ffb7e (ft/merge-tool) feat: add change for merge tool
+090785a Resolving
+74176f5 feat: Add conflict line in main
+16394bd (ft/conflict-branch) feat: Add conflict line in branch
+d3128f0 (origin/main, origin/HEAD) Part 3
+a06fb24 README.md update
+9b58a9e README.md update
+c2e473d README.md update
+15762f8 README.md update
+1ded0d0 READmb.md update
+ea89520 Merge branch 'ft/new-feature'
+803b3c8 Updated project readme
+d5a7220 (origin/ft/new-feature) Implemented core functionality for new feature
+732beef README.md update
+mba-koumba@MacBook-Pro-2 Git-Advanced % git checkout b8ffb7e
+M       .DS_Store
+Note: switching to 'b8ffb7e'.
+You are in 'detached HEAD' state. You can look around, make experimental
+changes and commit them, and you can discard any commits you make in this
+state without impacting any branches by switching back to a branch.
+HEAD is now at b8ffb7e feat: add change for merge tool
+mba-koumba@MacBook-Pro-2 Git-Advanced % git status
+HEAD detached at b8ffb7e
+Changes not staged for commit:
+        modified:   .DS_Store
+Untracked files:
+        tool.txt.orig
+no changes added to commit (use "git add" and/or "git commit -a")
+mba-koumba@MacBook-Pro-2 Git-Advanced % git checkout main
+M       .DS_Store
+Previous HEAD position was b8ffb7e feat: add change for merge tool
+Switched to branch 'main'
+Your branch is ahead of 'origin/main' by 6 commits.
+
+### Challenge 6: Ignoring Files/Directories
+
+# Goal:
+Exclude unnecessary files from version control.
+
+Commands:
+
+echo "/tmp" >> .gitignore
+git add .gitignore
+git commit -m "chore: Ignore temporary files"
+
+# Notes:
+
+.gitignore defines patterns for files or directories Git should ignore.
+
+# Output:
+
+mba-koumba@MacBook-Pro-2 Git-Advanced % echo "/tmp" >> .gitignore
+mba-koumba@MacBook-Pro-2 Git-Advanced % git add .gitignore
+mba-koumba@MacBook-Pro-2 Git-Advanced % git commit -m "chore: Ignore temporary files"
+[main 157302e] chore: Ignore temporary files
+ 1 file changed, 1 insertion(+)
+ create mode 100644 .gitignore
+
+### Challenge 7: Working with Tags
+
+# Goal:
+Create a tag for a specific commit.
+
+Commands:
+
+git tag v1.0
+git tag
+
+# Notes:
+
+git tag v1.0 marks the current commit with tag v1.0.
+
+git tag lists all available tags.
+
+# Output:
+
+mba-koumba@MacBook-Pro-2 Git-Advanced % git tag v1.0
+mba-koumba@MacBook-Pro-2 Git-Advanced % git tag
+v1.0
+
+### Challenge 8: Listing and Deleting Tags
+
+# Goal:
+Manage tags in your repository.
+
+Commands:
+
+git tag
+git tag -d v1.0
+
+# Notes:
+
+git tag lists tags.
+
+git tag -d <tag> deletes a local tag.
+
+# Output:
+
+mba-koumba@MacBook-Pro-2 Git-Advanced % git tag
+v1.0
+mba-koumba@MacBook-Pro-2 Git-Advanced % git tag -d v1.0
+Deleted tag 'v1.0' (was 157302e)
+
+### Challenge 9: Pushing Local Work to Remote Repositories
+
+# Goal:
+Push your work to GitHub.
+
+Commands:
+
+git push origin main
+git push origin ft/conflict-branch
+Notes:
+
+git push origin <branch> sends a local branch to the remote repository.
+
+# Output:
+
+mba-koumba@MacBook-Pro-2 Git-Advanced % git push origin main
+Enumerating objects: 22, done.
+Counting objects: 100% (22/22), done.
+Delta compression using up to 4 threads
+Compressing objects: 100% (16/16), done.
+Writing objects: 100% (21/21), 1.74 KiB | 297.00 KiB/s, done.
+Total 21 (delta 9), reused 0 (delta 0), pack-reused 0 (from 0)
+remote: Resolving deltas: 100% (9/9), completed with 1 local object.
+To https://github.com/kay1403/Git-Advanced.git
+   d3128f0..157302e  main -> main
+mba-koumba@MacBook-Pro-2 Git-Advanced % git push origin ft/conflict-branch
+Total 0 (delta 0), reused 0 (delta 0), pack-reused 0 (from 0)
+remote: 
+remote: Create a pull request for 'ft/conflict-branch' on GitHub by visiting:
+remote:      https://github.com/kay1403/Git-Advanced/pull/new/ft/conflict-branch
+remote: 
+To https://github.com/kay1403/Git-Advanced.git
+ * [new branch]      ft/conflict-branch -> ft/conflict-branch
+
+### Challenge 10: Pulling Changes from Remote Repositories
+
+# Goal:
+Update your local repository with remote changes.
+
+Commands:
+
+git pull origin main
+
+# Notes:
+
+git pull origin main fetches and merges changes from the remote main branch.
+
+Resolve conflicts if needed before committing.
+
+# Output:
+
+mba-koumba@MacBook-Pro-2 Git-Advanced % git pull origin main
+From https://github.com/kay1403/Git-Advanced
+ * branch            main       -> FETCH_HEAD
+Already up to date.
