@@ -188,6 +188,14 @@ git rebase --continue applies the remaining commits after resolving skipped comm
 
 git push --force is necessary because squashing rewrites history on the main branch.
 
+# Additional Note for Challenge 3 (after reviewing):
+
+# ⚠️ Note:
+The squash command I used works technically and cleans up the Git history.
+However, it does not merge the "Create second file" commit into "Create initial file" exactly as requested in the instructions.
+To follow the instructions precisely, one would need to run git rebase -i HEAD~2 and perform a targeted squash of these two specific commits.
+This way, the final history would retain a single commit combining these two initial files.
+
 
 ### Challenge 4: Splitting a Commit
 
