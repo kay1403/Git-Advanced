@@ -1,1 +1,8 @@
+t commit -m "Resolved using merge tool"
+
+<<<<<<< HEAD
 Change in main branch
+=======
+Change in merge-tool branch
+Change in main branch
+>>>>>>> ft/merge-tool
