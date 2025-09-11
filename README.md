@@ -785,3 +785,16 @@ HEAD is now at 4ee916c chore: Create third and fourth files
 macbookpro@AngeKoumba-MBP Git-Advanced % git status
 HEAD detached at 4ee916c
 nothing to commit, working tree clean
+
+
+## Part 3: Advanced Workflows
+
+### Challenge 1: Stashing Changes
+
+**Goal:**  
+Temporarily save uncommitted changes without committing them.
+
+**Commands:**
+```bash
+git stash
+git stash list
