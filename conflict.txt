@@ -1,1 +1,5 @@
+<<<<<<< HEAD
 Line from main branch
+=======
+Line from conflict branch
+>>>>>>> ft/conflict-branch
